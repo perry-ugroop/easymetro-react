@@ -1,0 +1,68 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-body {
+  text-align: left;	
+  clear: both;
+}
+
+.App-body #edtLines {
+	width: 500px;
+	height: 300px;
+	overflow: scroll;
+}
+
+.App-body #txtFrom {
+	width: 300px;
+}
+
+.App-body #txtTo {
+	width: 300px;
+}
+
+.App-col1 {
+	width: 50%;
+	float: left;
+}
+
+.App-col1 > div, .App-col2 > div {
+	padding: 2px;
+}
+
+.App-col2 {
+	width: 50%;
+	float: left;
+}
+
+.App-col2 .from-to {
+	display: inline-block;
+	width: 50px;
+}
+
+.App-col2 #edtShortestRoute {
+	width: 460px;
+	height: 200px;
+	overflow: scroll;
+}
+
+.App-col2 .div-shortest-route {
+	margin-top: 10px;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
