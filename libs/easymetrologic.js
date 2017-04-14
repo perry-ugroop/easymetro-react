@@ -1,6 +1,8 @@
+'use strict';
+
 module.exports = {
 	parseLinesSpec: function(str) {
-		alert('Hello, World');
+		alert('Hello, World: ' + str);
 	},
 	
 };
