@@ -42,6 +42,36 @@ describe('Test parsing line specs', () => {
             stations.sort();			
 		    assert(JSON.stringify(stations) === JSON.stringify(['Station1', 'Station2', 'Station3']));
 		});
+		
+        describe('Stations of the first line should have correct locations relative to each other', () => {
+            let index = 0;
+            let stations = result.getLineStationNames(index);
+
+            it('Station1 should have only one neighboring station: Station2', () => {
+                let stn1 = result.getStationInfo('Station1', 'LineName');			
+			    let neighborStations = stn1.getNeighborStations();
+				
+				assert(neighborStations.length === 1, 'Neighboring station count is not 1');
+				
+				let neighStn1 = neighborStations[0];
+				assert(neighStn1.getName() === 'Station2', 'Station name is not Station2');
+			});
+
+            it('Station2 should have two neighboring stations: Station1 and Station3', () => {
+                let stn1 = result.getStationInfo('Station1', 'LineName');			
+			    let neighborStations = stn1.getNeighborStations();
+				
+				assert(neighborStations.length === 2, 'Neighboring station count is not 2');
+				
+				let neighStns = [];
+				for(let i in neighborStations.length) {
+					neighStns.push(neighborStations[i].getName());					
+				}
+				neighStns.sort();
+				
+				assert(JSON.stringify(neighStns) === JSON.stringify(['Station1', 'Station3']), 'Station names are neither Station1 nor Station3');
+			});			
+		});		
 	});	
 	
 });
