@@ -58,13 +58,13 @@ describe('Test parsing line specs', () => {
 			});
 
             it('Station2 should have two neighboring stations: Station1 and Station3', () => {
-                let stn1 = result.getStationInfo('Station1', 'LineName');			
-			    let neighborStations = stn1.getNeighborStations();
+                let stn2 = result.getStationInfo('Station2', 'LineName');			
+			    let neighborStations = stn2.getNeighborStations();
 				
 				assert(neighborStations.length === 2, 'Neighboring station count is not 2');
 				
 				let neighStns = [];
-				for(let i in neighborStations.length) {
+				for(let i in neighborStations) {
 					neighStns.push(neighborStations[i].getName());					
 				}
 				neighStns.sort();

@@ -50,10 +50,7 @@ class LineNetwork {
 			this._stations[key] = new Station(stationName, lineName);
 			
 			if(prevStation) {
-				console.log(`${this._stations[key].getName()} neigh ${prevStation.getName()}`);
 			    this._stations[key].addNeighborStation(prevStation);
-				
-				console.log(`${prevStation.getName()} neigh ${this._stations[key].getName()}`);
                 prevStation.addNeighborStation(this._stations[key]);
 			}
 			
