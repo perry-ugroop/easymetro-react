@@ -39,23 +39,67 @@ class LineNetwork {
 		return `${stationName}|${lineName}`;
 	}
 	
-	addLine(lineName, arrStationNames) {
-		let lineObj = { 'name': lineName, 'stations': arrStationNames};
-		this._lines.push(lineObj);
+	_getLineIndex(lineName) {
+		let ret = -1;
 		
-		let prevStation = null;
+		for(let i = 0; i < this._lines.length; i++) {
+			if(this._lines[i].name === lineName) {
+				ret = i;
+				break;
+			}
+		}
+
+        return ret;		
+	}
+	
+	_registerStations(arrStationNames, lineName, startingPrevStation) {
+		let prevStation = startingPrevStation;
+		
 		for(let i in arrStationNames) {
 			let stationName = arrStationNames[i];
 			let key = this._makeStationKey(stationName, lineName);
 			this._stations[key] = new Station(stationName, lineName);
 			
 			if(prevStation) {
-			    this._stations[key].addNeighborStation(prevStation);
-                prevStation.addNeighborStation(this._stations[key]);
+				this._stations[key].addNeighborStation(prevStation);
+				prevStation.addNeighborStation(this._stations[key]);
 			}
 			
 			prevStation = this._stations[key];
+	    }		
+	}
+	
+	addLine(lineName, arrStationNames) {
+		let lineObj = { 'name': lineName, 'stations': arrStationNames};
+		this._lines.push(lineObj);
+		
+		let prevStation = null;
+		this._registerStations(arrStationNames, lineName, prevStation);
+	}
+	
+	addStationNamesToLine(arrStationNames, lineName) {
+		let index = this._getLineIndex(lineName);
+		
+		if(index !== -1) {
+			let lineObj  = this._lines[index];			
+		
+			let prevStation = null;
+		
+			if(lineObj.stations.length > 1) {
+			    let prevStationName = lineObj.stations[lineObj.stations.length - 1];
+                prevStation = this.getStationInfo(prevStationName, lineName);			
+			}
+	
+			for(let i in arrStationNames) {
+				lineObj.stations.push(arrStationNames[i]);
+			}
+			
+			this._registerStations(arrStationNames, lineName, prevStation);
 		}
+	}
+	
+	existLine(lineName) {
+		return (this._getLineIndex(lineName) !== -1);
 	}
 	
 	getLineCount() {
@@ -110,7 +154,11 @@ module.exports = {
 						}
 					}
 					
-					retVal.addLine(lineName, stations);
+					if(!retVal.existLine(lineName)) {
+					    retVal.addLine(lineName, stations);
+					} else {
+						retVal.addStationNamesToLine(stations, lineName);
+					}
 				}		
 			}
 			
