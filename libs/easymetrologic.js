@@ -85,28 +85,33 @@ module.exports = {
 			str = str.trim();
 			
 			if(str) {
-				let lineName = str;
-				let stations = [];
+				retVal = new LineNetwork;
 				
-				let colonPos = str.indexOf(':');
-				if(colonPos > -1) {
-				    lineName = str.substr(0, colonPos);
-					let stationStr = str.substr(colonPos + 1).trim();
-					let splitted = stationStr.split(/\s*,\s*/);
+				let lines = str.split(/\s*\r?\n\s*/);
+				
+				for(let j in lines) {
+					let theLine = lines[j].trim();
 					
-					for(let i in splitted) {
-						let stn = splitted[i].trim();
+					let lineName = theLine;
+					let stations = [];
+					
+					let colonPos = theLine.indexOf(':');
+					if(colonPos > -1) {
+						lineName = theLine.substr(0, colonPos);
+						let stationStr = theLine.substr(colonPos + 1).trim();
+						let splitted = stationStr.split(/\s*,\s*/);
 						
-						if(stn) {
-						    stations.push(stn);
+						for(let i in splitted) {
+							let stn = splitted[i].trim();
+							
+							if(stn) {
+								stations.push(stn);
+							}
 						}
 					}
-				}
-				
-				retVal = new LineNetwork;
-				retVal.addLine(lineName, stations);
-				
-			    return retVal;	
+					
+					retVal.addLine(lineName, stations);
+				}		
 			}
 			
 			
