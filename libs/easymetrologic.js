@@ -1,18 +1,14 @@
 'use strict';
 
 class Station {
-    constructor(stationName, lineName) {
+    constructor(stationName) {
         this._name = stationName;
-        this._lineName = lineName;
+        this._lines = [];
         this._neighborStations = [];
     }
-    
+
     getName() {
         return this._name;
-    }
-    
-    getLineName() {
-        return this._lineName;
     }
     
     getNeighborStations() {
@@ -21,6 +17,10 @@ class Station {
     
     addNeighborStation(stationObj) {
         this._neighborStations.push(stationObj);
+    }
+
+    addLine(lineName) {
+        this._lines.push(lineName);
     }
     
 }
@@ -35,8 +35,8 @@ class LineNetwork {
         return JSON.parse(JSON.stringify(s));
     }
     
-    _makeStationKey(stationName, lineName) {
-        return `${stationName}|${lineName}`;
+    _makeStationKey(stationName) {
+        return `${stationName}`;
     }
     
     _getLineIndex(lineName) {
@@ -57,8 +57,13 @@ class LineNetwork {
         
         for(let i in arrStationNames) {
             let stationName = arrStationNames[i];
-            let key = this._makeStationKey(stationName, lineName);
-            this._stations[key] = new Station(stationName, lineName);
+            let key = this._makeStationKey(stationName);
+
+            if(!this._stations[key]) {
+                this._stations[key] = new Station(stationName);
+            }
+
+            this._stations[key].addLine(lineName);
             
             if(prevStation) {
                 this._stations[key].addNeighborStation(prevStation);
@@ -87,7 +92,7 @@ class LineNetwork {
         
             if(lineObj.stations.length > 1) {
                 let prevStationName = lineObj.stations[lineObj.stations.length - 1];
-                prevStation = this.getStationInfo(prevStationName, lineName);           
+                prevStation = this.getStationInfo(prevStationName);           
             }
     
             for(let i in arrStationNames) {
@@ -115,8 +120,8 @@ class LineNetwork {
         return this._cloneObj(stns);
     }
     
-    getStationInfo(stationName, lineName) {
-        let key = this._makeStationKey(stationName, lineName);
+    getStationInfo(stationName) {
+        let key = this._makeStationKey(stationName);
         return this._stations[key];
     }
 }
