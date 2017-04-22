@@ -62,10 +62,8 @@ describe('Test parsing line specs', () => {
                 let stn1 = result.getStationInfo('Station1');           
                 let neighborStations = stn1.getNeighborStations();
                 
-                assert(neighborStations.length === 1, 'Neighboring station count is not 1');
-                
-                let neighStn1 = neighborStations[0];
-                assert(neighStn1.getName() === 'Station2', 'Station name is not Station2');
+                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                assert(utils.isEqualObject(neighStns, ['Station2']));
             });
 
             it('Station2 should have two neighboring stations: Station1 and Station3', () => {
@@ -79,11 +77,9 @@ describe('Test parsing line specs', () => {
             it('Station3 should have only one neighboring station: Station2', () => {
                 let stn3 = result.getStationInfo('Station3');           
                 let neighborStations = stn3.getNeighborStations();
-                
-                assert(neighborStations.length === 1, 'Neighboring station count is not 1');
-                
-                let neighStn3 = neighborStations[0];
-                assert(neighStn3.getName() === 'Station2', 'Station name is not Station2');
+
+                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                assert(utils.isEqualObject(neighStns, ['Station2']));
             });         
         });     
     }); 
@@ -159,10 +155,8 @@ describe('Test parsing line specs', () => {
                 let stn1 = result.getStationInfo('S1');            
                 let neighborStations = stn1.getNeighborStations();
                 
-                assert(neighborStations.length === 1, 'Neighboring station count is not 1');
-                
-                let neighStn1 = neighborStations[0];
-                assert(neighStn1.getName() === 'S2', 'Station name is not S2');
+                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                assert(utils.isEqualObject(neighStns, ['S2']));
             });
 
             it('S2 should have two neighboring stations: S1 and S3', () => {
@@ -177,10 +171,8 @@ describe('Test parsing line specs', () => {
                 let stn3 = result.getStationInfo('S3');            
                 let neighborStations = stn3.getNeighborStations();
                 
-                assert(neighborStations.length === 1, 'Neighboring station count is not 1');
-                
-                let neighStn3 = neighborStations[0];
-                assert(neighStn3.getName() === 'S2', 'Station name is not S2');
+                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                assert(utils.isEqualObject(neighStns, ['S2']));
             });         
         }); 
         
@@ -192,10 +184,8 @@ describe('Test parsing line specs', () => {
                 let stn1 = result.getStationInfo('S4');            
                 let neighborStations = stn1.getNeighborStations();
                 
-                assert(neighborStations.length === 1, 'Neighboring station count is not 1');
-                
-                let neighStn1 = neighborStations[0];
-                assert(neighStn1.getName() === 'S5', 'Station name is not S5');
+                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                assert(utils.isEqualObject(neighStns, ['S5']));
             });
 
             it('S5 should have two neighboring stations: S4 and S6', () => {
@@ -210,10 +200,8 @@ describe('Test parsing line specs', () => {
                 let stn3 = result.getStationInfo('S6');            
                 let neighborStations = stn3.getNeighborStations();
                 
-                assert(neighborStations.length === 1, 'Neighboring station count is not 1');
-                
-                let neighStn3 = neighborStations[0];
-                assert(neighStn3.getName() === 'S5', 'Station name is not S5');
+                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                assert(utils.isEqualObject(neighStns, ['S5']));
             });         
         }); 
     }); 
@@ -245,10 +233,8 @@ describe('Test parsing line specs', () => {
                 let stn1 = result.getStationInfo('S1');            
                 let neighborStations = stn1.getNeighborStations();
                 
-                assert(neighborStations.length === 1, 'Neighboring station count is not 1');
-                
-                let neighStn1 = neighborStations[0];
-                assert(neighStn1.getName() === 'S2', 'Station name is not S2');
+                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                assert(utils.isEqualObject(neighStns, ['S2']));
             });
 
             it('S2 should have two neighboring stations: S1 and S3', () => {
@@ -287,10 +273,8 @@ describe('Test parsing line specs', () => {
                 let stn6 = result.getStationInfo('S6');            
                 let neighborStations = stn6.getNeighborStations();
                         
-                assert(neighborStations.length === 1, 'Neighboring station count is not 1');
-                    
-                let neighStn6 = neighborStations[0];
-                assert(neighStn6.getName() === 'S5', 'Station name is not S5');
+                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                assert(utils.isEqualObject(neighStns, ['S5']));
             });         
         });
     });     
@@ -334,10 +318,8 @@ describe('Test parsing line specs', () => {
                 let stn1 = result.getStationInfo('S1');            
                 let neighborStations = stn1.getNeighborStations();
                 
-                assert(neighborStations.length === 1, 'Neighboring station count is not 1');
-                
-                let neighStn1 = neighborStations[0];
-                assert(neighStn1.getName() === 'SX', 'Station name is not SX');
+                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                assert(utils.isEqualObject(neighStns, ['SX']));
             });
 
             it('SX should have four neighboring stations: S1, S3, S4, S6', () => {
@@ -352,10 +334,8 @@ describe('Test parsing line specs', () => {
                 let stn3 = result.getStationInfo('S3');            
                 let neighborStations = stn3.getNeighborStations();
                 
-                assert(neighborStations.length === 1, 'Neighboring station count is not 1');
-                
-                let neighStn3 = neighborStations[0];
-                assert(neighStn3.getName() === 'SX', 'Station name is not SX');
+                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                assert(utils.isEqualObject(neighStns, ['SX']));
             });         
         }); 
         
@@ -367,20 +347,16 @@ describe('Test parsing line specs', () => {
                 let stn4 = result.getStationInfo('S4');            
                 let neighborStations = stn4.getNeighborStations();
                 
-                assert(neighborStations.length === 1, 'Neighboring station count is not 1');
-                
-                let neighStn1 = neighborStations[0];
-                assert(neighStn1.getName() === 'SX', 'Station name is not SX');
+                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                assert(utils.isEqualObject(neighStns, ['SX']));
             });
 
             it('S6 should have only one neighboring station: SX', () => {
                 let stn6 = result.getStationInfo('S6');            
                 let neighborStations = stn6.getNeighborStations();
                 
-                assert(neighborStations.length === 1, 'Neighboring station count is not 1');
-                
-                let neighStn3 = neighborStations[0];
-                assert(neighStn3.getName() === 'SX', 'Station name is not SX');
+                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                assert(utils.isEqualObject(neighStns, ['SX']));
             });         
         }); 
     }); 
@@ -440,10 +416,8 @@ describe('Test parsing line specs', () => {
                 let stn3 = result.getStationInfo('S3');            
                 let neighborStations = stn3.getNeighborStations();
                 
-                assert(neighborStations.length === 1, 'Neighboring station count is not 1');
-                
-                let neighStn3 = neighborStations[0];
-                assert(neighStn3.getName() === 'S2', 'Station name is not S2');
+                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                assert(utils.isEqualObject(neighStns, ['S2']));
             });         
         }); 
         
@@ -463,10 +437,8 @@ describe('Test parsing line specs', () => {
                 let stn3 = result.getStationInfo('S6');            
                 let neighborStations = stn3.getNeighborStations();
                 
-                assert(neighborStations.length === 1, 'Neighboring station count is not 1');
-                
-                let neighStn3 = neighborStations[0];
-                assert(neighStn3.getName() === 'S5', 'Station name is not S5');
+                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                assert(utils.isEqualObject(neighStns, ['S5']));
             });         
         }); 
     }); 
@@ -510,10 +482,8 @@ describe('Test parsing line specs', () => {
                 let stn1 = result.getStationInfo('S1');            
                 let neighborStations = stn1.getNeighborStations();
                 
-                assert(neighborStations.length === 1, 'Neighboring station count is not 1');
-                
-                let neighStn1 = neighborStations[0];
-                assert(neighStn1.getName() === 'SX', 'Station name is not SX');
+                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                assert(utils.isEqualObject(neighStns, ['SX']));
             });
 
             it('SX should have three neighboring stations: S1, S3 and S5', () => {
@@ -528,10 +498,8 @@ describe('Test parsing line specs', () => {
                 let stn3 = result.getStationInfo('S3');            
                 let neighborStations = stn3.getNeighborStations();
                 
-                assert(neighborStations.length === 1, 'Neighboring station count is not 1');
-                
-                let neighStn3 = neighborStations[0];
-                assert(neighStn3.getName() === 'SX', 'Station name is not SX');
+                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                assert(utils.isEqualObject(neighStns, ['SX']));
             });         
         }); 
         
@@ -551,10 +519,8 @@ describe('Test parsing line specs', () => {
                 let stn6 = result.getStationInfo('S6');            
                 let neighborStations = stn6.getNeighborStations();
                 
-                assert(neighborStations.length === 1, 'Neighboring station count is not 1');
-                
-                let neighStn3 = neighborStations[0];
-                assert(neighStn3.getName() === 'S5', 'Station name is not S5');
+                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                assert(utils.isEqualObject(neighStns, ['S5']));
             });         
         }); 
     }); 
@@ -598,10 +564,8 @@ describe('Test parsing line specs', () => {
                 let stn1 = result.getStationInfo('S1');            
                 let neighborStations = stn1.getNeighborStations();
                 
-                assert(neighborStations.length === 1, 'Neighboring station count is not 1');
-                
-                let neighStn1 = neighborStations[0];
-                assert(neighStn1.getName() === 'S2', 'Station name is not S2');
+                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                assert(utils.isEqualObject(neighStns, ['S2']));
             });
 
             it('S2 should have two neighboring stations: S1 and SX', () => {
@@ -629,20 +593,16 @@ describe('Test parsing line specs', () => {
                 let stn4 = result.getStationInfo('S4');            
                 let neighborStations = stn4.getNeighborStations();
                 
-                assert(neighborStations.length === 1, 'Neighboring station count is not 1');
-                
-                let neighStn4 = neighborStations[0];
-                assert(neighStn4.getName() === 'SX', 'Station name is not SX');
+                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                assert(utils.isEqualObject(neighStns, ['SX']));
             });
 
             it('S6 should have only one neighboring station: SX', () => {
                 let stn5 = result.getStationInfo('S6');            
                 let neighborStations = stn5.getNeighborStations();
                 
-                assert(neighborStations.length === 1, 'Neighboring station count is not 1');
-                
-                let neighStn6 = neighborStations[0];
-                assert(neighStn6.getName() === 'SX', 'Station name is not SX');
+                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                assert(utils.isEqualObject(neighStns, ['SX']));
             });         
         }); 
     }); 
