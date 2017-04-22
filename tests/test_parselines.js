@@ -638,4 +638,106 @@ describe('Test parsing line specs', () => {
             });         
         }); 
     }); 
+
+    describe('Parsing the string "A: S1, S2, SX[newline]B: S4, SX, S6" should yield a valid line network object', () => {
+        let result = easymetrologic.parseLinesSpec('A: S1, S2, SX\nB: S4, SX, S6'); 
+        
+        it('Line count should be 2', () => {            
+            assert(result.getLineCount() === 2);
+        });
+        
+        it('First line should be named "A"', () => {
+            let index = 0;          
+            assert(result.getLineName(index) === 'A');
+        });
+        
+        it('Second line should be named "B"', () => {
+            let index = 1;          
+            assert(result.getLineName(index) === 'B');
+        });
+        
+        it('Stations of the first line should be S1, S2 and SX', () => {
+            let index = 0;
+            let stations = result.getLineStationNames(index);
+            stations.sort();            
+            assert(JSON.stringify(stations) === JSON.stringify(['S1', 'S2', 'SX']));
+        });
+
+        it('Stations of the second line should be S4, SX and S6', () => {
+            let index = 1;
+            let stations = result.getLineStationNames(index);
+            stations.sort();            
+            assert(JSON.stringify(stations) === JSON.stringify(['S4', 'S6', 'SX']));
+        }); 
+
+        describe('Stations of the first line should have correct locations relative to each other', () => { 
+            let index = 0;
+            let stations = result.getLineStationNames(index);
+
+            it('S1 should have only one neighboring station: S2', () => {
+                let stn1 = result.getStationInfo('S1');            
+                let neighborStations = stn1.getNeighborStations();
+                
+                assert(neighborStations.length === 1, 'Neighboring station count is not 1');
+                
+                let neighStn1 = neighborStations[0];
+                assert(neighStn1.getName() === 'S2', 'Station name is not S2');
+            });
+
+            it('S2 should have two neighboring stations: S1 and SX', () => {
+                let stn2 = result.getStationInfo('S2');            
+                let neighborStations = stn2.getNeighborStations();
+                
+                assert(neighborStations.length === 2, 'Neighboring station count is not 2');
+                
+                let neighStns = [];
+                for(let i in neighborStations) {
+                    neighStns.push(neighborStations[i].getName());                  
+                }
+                neighStns.sort();
+                
+                assert(JSON.stringify(neighStns) === JSON.stringify(['S1', 'SX']), 'Station names are neither S1 nor SX');
+            });
+
+            it('SX should have three neighboring stations: S2, S4 and S6', () => {
+                let stnx = result.getStationInfo('SX');            
+                let neighborStations = stnx.getNeighborStations();
+                
+                assert(neighborStations.length === 3, 'Neighboring station count is not 3');
+                
+                let neighStns = [];
+                for(let i in neighborStations) {
+                    neighStns.push(neighborStations[i].getName());                  
+                }
+                neighStns.sort();
+                
+                assert(JSON.stringify(neighStns) === JSON.stringify(['S2', 'S4', 'S6']), 'Station names are neither S2, S4 nor S6');
+            });
+        }); 
+        
+        describe('Stations of the second line should have correct locations relative to each other', () => {
+            let index = 0;
+            let stations = result.getLineStationNames(index);
+
+            it('S4 should have only one neighboring station: SX', () => {
+                let stn4 = result.getStationInfo('S4');            
+                let neighborStations = stn4.getNeighborStations();
+                
+                assert(neighborStations.length === 1, 'Neighboring station count is not 1');
+                
+                let neighStn4 = neighborStations[0];
+                assert(neighStn4.getName() === 'SX', 'Station name is not SX');
+            });
+
+            it('S6 should have only one neighboring station: SX', () => {
+                let stn5 = result.getStationInfo('S6');            
+                let neighborStations = stn5.getNeighborStations();
+                
+                assert(neighborStations.length === 1, 'Neighboring station count is not 1');
+                
+                let neighStn6 = neighborStations[0];
+                assert(neighStn6.getName() === 'SX', 'Station name is not SX');
+            });         
+        }); 
+    }); 
 });
