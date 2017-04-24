@@ -4,16 +4,6 @@ var assert = require('assert');
 var easymetrologic = require('../libs/easymetrologic.js');
 var utils = require('../libs/utils.js');
 
-function getSortedNamesOfNeighborStations(neighborStations) {
-    let neighStns = [];
-    for(let i in neighborStations) {
-        neighStns.push(neighborStations[i].getName());                  
-    }
-    neighStns.sort();
-
-    return neighStns;
-}
-
 describe('Test parsing line specs', () => {
     it('Parsing a null should yield an empty object', () => {
         let result = easymetrologic.parseLinesSpec(null);
@@ -62,7 +52,7 @@ describe('Test parsing line specs', () => {
                 let stn1 = result.getStationInfo('Station1');           
                 let neighborStations = stn1.getNeighborStations();
                 
-                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                let neighStns = utils.getSortedNamesOfNeighborStations(neighborStations);      
                 assert(utils.isEqualObject(neighStns, ['Station2']));
             });
 
@@ -70,7 +60,7 @@ describe('Test parsing line specs', () => {
                 let stn2 = result.getStationInfo('Station2');           
                 let neighborStations = stn2.getNeighborStations();
 
-                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                let neighStns = utils.getSortedNamesOfNeighborStations(neighborStations);      
                 assert(utils.isEqualObject(neighStns, ['Station1', 'Station3']));
             });
 
@@ -78,7 +68,7 @@ describe('Test parsing line specs', () => {
                 let stn3 = result.getStationInfo('Station3');           
                 let neighborStations = stn3.getNeighborStations();
 
-                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                let neighStns = utils.getSortedNamesOfNeighborStations(neighborStations);      
                 assert(utils.isEqualObject(neighStns, ['Station2']));
             });         
         });     
@@ -155,7 +145,7 @@ describe('Test parsing line specs', () => {
                 let stn1 = result.getStationInfo('S1');            
                 let neighborStations = stn1.getNeighborStations();
                 
-                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                let neighStns = utils.getSortedNamesOfNeighborStations(neighborStations);      
                 assert(utils.isEqualObject(neighStns, ['S2']));
             });
 
@@ -163,7 +153,7 @@ describe('Test parsing line specs', () => {
                 let stn2 = result.getStationInfo('S2');            
                 let neighborStations = stn2.getNeighborStations();
                 
-                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                let neighStns = utils.getSortedNamesOfNeighborStations(neighborStations);      
                 assert(utils.isEqualObject(neighStns, ['S1', 'S3']));
             });
 
@@ -171,7 +161,7 @@ describe('Test parsing line specs', () => {
                 let stn3 = result.getStationInfo('S3');            
                 let neighborStations = stn3.getNeighborStations();
                 
-                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                let neighStns = utils.getSortedNamesOfNeighborStations(neighborStations);      
                 assert(utils.isEqualObject(neighStns, ['S2']));
             });         
         }); 
@@ -184,7 +174,7 @@ describe('Test parsing line specs', () => {
                 let stn1 = result.getStationInfo('S4');            
                 let neighborStations = stn1.getNeighborStations();
                 
-                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                let neighStns = utils.getSortedNamesOfNeighborStations(neighborStations);      
                 assert(utils.isEqualObject(neighStns, ['S5']));
             });
 
@@ -192,7 +182,7 @@ describe('Test parsing line specs', () => {
                 let stn2 = result.getStationInfo('S5');            
                 let neighborStations = stn2.getNeighborStations();
                 
-                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                let neighStns = utils.getSortedNamesOfNeighborStations(neighborStations);      
                 assert(utils.isEqualObject(neighStns, ['S4', 'S6']));
             });
 
@@ -200,7 +190,7 @@ describe('Test parsing line specs', () => {
                 let stn3 = result.getStationInfo('S6');            
                 let neighborStations = stn3.getNeighborStations();
                 
-                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                let neighStns = utils.getSortedNamesOfNeighborStations(neighborStations);      
                 assert(utils.isEqualObject(neighStns, ['S5']));
             });         
         }); 
@@ -233,7 +223,7 @@ describe('Test parsing line specs', () => {
                 let stn1 = result.getStationInfo('S1');            
                 let neighborStations = stn1.getNeighborStations();
                 
-                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                let neighStns = utils.getSortedNamesOfNeighborStations(neighborStations);      
                 assert(utils.isEqualObject(neighStns, ['S2']));
             });
 
@@ -241,7 +231,7 @@ describe('Test parsing line specs', () => {
                 let stn2 = result.getStationInfo('S2');            
                 let neighborStations = stn2.getNeighborStations();
                 
-                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                let neighStns = utils.getSortedNamesOfNeighborStations(neighborStations);      
                 assert(utils.isEqualObject(neighStns, ['S1', 'S3']));
             });
 
@@ -249,7 +239,7 @@ describe('Test parsing line specs', () => {
                 let stn3 = result.getStationInfo('S3');            
                 let neighborStations = stn3.getNeighborStations();
                 
-                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                let neighStns = utils.getSortedNamesOfNeighborStations(neighborStations);      
                 assert(utils.isEqualObject(neighStns, ['S2', 'S4']));
             }); 
 
@@ -257,7 +247,7 @@ describe('Test parsing line specs', () => {
                 let stn4 = result.getStationInfo('S4');            
                 let neighborStations = stn4.getNeighborStations();
                 
-                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                let neighStns = utils.getSortedNamesOfNeighborStations(neighborStations);      
                 assert(utils.isEqualObject(neighStns, ['S3', 'S5']));
             });         
 
@@ -265,7 +255,7 @@ describe('Test parsing line specs', () => {
                 let stn5 = result.getStationInfo('S5');            
                 let neighborStations = stn5.getNeighborStations();
                 
-                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                let neighStns = utils.getSortedNamesOfNeighborStations(neighborStations);      
                 assert(utils.isEqualObject(neighStns, ['S4', 'S6']));
             });         
 
@@ -273,7 +263,7 @@ describe('Test parsing line specs', () => {
                 let stn6 = result.getStationInfo('S6');            
                 let neighborStations = stn6.getNeighborStations();
                         
-                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                let neighStns = utils.getSortedNamesOfNeighborStations(neighborStations);      
                 assert(utils.isEqualObject(neighStns, ['S5']));
             });         
         });
@@ -318,7 +308,7 @@ describe('Test parsing line specs', () => {
                 let stn1 = result.getStationInfo('S1');            
                 let neighborStations = stn1.getNeighborStations();
                 
-                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                let neighStns = utils.getSortedNamesOfNeighborStations(neighborStations);      
                 assert(utils.isEqualObject(neighStns, ['SX']));
             });
 
@@ -326,7 +316,7 @@ describe('Test parsing line specs', () => {
                 let stnx = result.getStationInfo('SX');            
                 let neighborStations = stnx.getNeighborStations();
                 
-                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                let neighStns = utils.getSortedNamesOfNeighborStations(neighborStations);      
                 assert(utils.isEqualObject(neighStns, ['S1', 'S3', 'S4', 'S6']));
             });
 
@@ -334,7 +324,7 @@ describe('Test parsing line specs', () => {
                 let stn3 = result.getStationInfo('S3');            
                 let neighborStations = stn3.getNeighborStations();
                 
-                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                let neighStns = utils.getSortedNamesOfNeighborStations(neighborStations);      
                 assert(utils.isEqualObject(neighStns, ['SX']));
             });         
         }); 
@@ -347,7 +337,7 @@ describe('Test parsing line specs', () => {
                 let stn4 = result.getStationInfo('S4');            
                 let neighborStations = stn4.getNeighborStations();
                 
-                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                let neighStns = utils.getSortedNamesOfNeighborStations(neighborStations);      
                 assert(utils.isEqualObject(neighStns, ['SX']));
             });
 
@@ -355,7 +345,7 @@ describe('Test parsing line specs', () => {
                 let stn6 = result.getStationInfo('S6');            
                 let neighborStations = stn6.getNeighborStations();
                 
-                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                let neighStns = utils.getSortedNamesOfNeighborStations(neighborStations);      
                 assert(utils.isEqualObject(neighStns, ['SX']));
             });         
         }); 
@@ -400,7 +390,7 @@ describe('Test parsing line specs', () => {
                 let stnx = result.getStationInfo('SX');            
                 let neighborStations = stnx.getNeighborStations();
                 
-                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                let neighStns = utils.getSortedNamesOfNeighborStations(neighborStations);      
                 assert(utils.isEqualObject(neighStns, ['S2', 'S5']));
             });
 
@@ -408,7 +398,7 @@ describe('Test parsing line specs', () => {
                 let stn2 = result.getStationInfo('S2');            
                 let neighborStations = stn2.getNeighborStations();
                 
-                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                let neighStns = utils.getSortedNamesOfNeighborStations(neighborStations);      
                 assert(utils.isEqualObject(neighStns, ['S3', 'SX']));
             });
 
@@ -416,7 +406,7 @@ describe('Test parsing line specs', () => {
                 let stn3 = result.getStationInfo('S3');            
                 let neighborStations = stn3.getNeighborStations();
                 
-                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                let neighStns = utils.getSortedNamesOfNeighborStations(neighborStations);      
                 assert(utils.isEqualObject(neighStns, ['S2']));
             });         
         }); 
@@ -429,7 +419,7 @@ describe('Test parsing line specs', () => {
                 let stn2 = result.getStationInfo('S5');            
                 let neighborStations = stn2.getNeighborStations();
                 
-                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                let neighStns = utils.getSortedNamesOfNeighborStations(neighborStations);      
                 assert(utils.isEqualObject(neighStns, ['S6', 'SX']));
             });
 
@@ -437,7 +427,7 @@ describe('Test parsing line specs', () => {
                 let stn3 = result.getStationInfo('S6');            
                 let neighborStations = stn3.getNeighborStations();
                 
-                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                let neighStns = utils.getSortedNamesOfNeighborStations(neighborStations);      
                 assert(utils.isEqualObject(neighStns, ['S5']));
             });         
         }); 
@@ -482,7 +472,7 @@ describe('Test parsing line specs', () => {
                 let stn1 = result.getStationInfo('S1');            
                 let neighborStations = stn1.getNeighborStations();
                 
-                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                let neighStns = utils.getSortedNamesOfNeighborStations(neighborStations);      
                 assert(utils.isEqualObject(neighStns, ['SX']));
             });
 
@@ -490,7 +480,7 @@ describe('Test parsing line specs', () => {
                 let stnx = result.getStationInfo('SX');            
                 let neighborStations = stnx.getNeighborStations();
                 
-                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                let neighStns = utils.getSortedNamesOfNeighborStations(neighborStations);      
                 assert(utils.isEqualObject(neighStns, ['S1', 'S3', 'S5']));
             });
 
@@ -498,7 +488,7 @@ describe('Test parsing line specs', () => {
                 let stn3 = result.getStationInfo('S3');            
                 let neighborStations = stn3.getNeighborStations();
                 
-                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                let neighStns = utils.getSortedNamesOfNeighborStations(neighborStations);      
                 assert(utils.isEqualObject(neighStns, ['SX']));
             });         
         }); 
@@ -511,7 +501,7 @@ describe('Test parsing line specs', () => {
                 let stn5 = result.getStationInfo('S5');            
                 let neighborStations = stn5.getNeighborStations();
                 
-                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                let neighStns = utils.getSortedNamesOfNeighborStations(neighborStations);      
                 assert(utils.isEqualObject(neighStns, ['S6', 'SX']));
             });
 
@@ -519,7 +509,7 @@ describe('Test parsing line specs', () => {
                 let stn6 = result.getStationInfo('S6');            
                 let neighborStations = stn6.getNeighborStations();
                 
-                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                let neighStns = utils.getSortedNamesOfNeighborStations(neighborStations);      
                 assert(utils.isEqualObject(neighStns, ['S5']));
             });         
         }); 
@@ -564,7 +554,7 @@ describe('Test parsing line specs', () => {
                 let stn1 = result.getStationInfo('S1');            
                 let neighborStations = stn1.getNeighborStations();
                 
-                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                let neighStns = utils.getSortedNamesOfNeighborStations(neighborStations);      
                 assert(utils.isEqualObject(neighStns, ['S2']));
             });
 
@@ -572,7 +562,7 @@ describe('Test parsing line specs', () => {
                 let stn2 = result.getStationInfo('S2');            
                 let neighborStations = stn2.getNeighborStations();
                 
-                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                let neighStns = utils.getSortedNamesOfNeighborStations(neighborStations);      
                 assert(utils.isEqualObject(neighStns, ['S1', 'SX']));
             });
 
@@ -580,7 +570,7 @@ describe('Test parsing line specs', () => {
                 let stnx = result.getStationInfo('SX');            
                 let neighborStations = stnx.getNeighborStations();
                 
-                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                let neighStns = utils.getSortedNamesOfNeighborStations(neighborStations);      
                 assert(utils.isEqualObject(neighStns, ['S2', 'S4', 'S6']));
             });
         }); 
@@ -593,7 +583,7 @@ describe('Test parsing line specs', () => {
                 let stn4 = result.getStationInfo('S4');            
                 let neighborStations = stn4.getNeighborStations();
                 
-                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                let neighStns = utils.getSortedNamesOfNeighborStations(neighborStations);      
                 assert(utils.isEqualObject(neighStns, ['SX']));
             });
 
@@ -601,7 +591,7 @@ describe('Test parsing line specs', () => {
                 let stn5 = result.getStationInfo('S6');            
                 let neighborStations = stn5.getNeighborStations();
                 
-                let neighStns = getSortedNamesOfNeighborStations(neighborStations);      
+                let neighStns = utils.getSortedNamesOfNeighborStations(neighborStations);      
                 assert(utils.isEqualObject(neighStns, ['SX']));
             });         
         }); 
