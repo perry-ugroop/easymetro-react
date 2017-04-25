@@ -35,6 +35,40 @@ describe('Test traversing the line network', () => {
             let neighStns = utils.getSortedNamesOfNeighborStations(neighborStations);      
             assert(utils.isEqualObject(neighStns, ['A5', 'A7', 'C7', 'C9']));
         });
+
+        describe('Assuming $1 per station and $1 per line switch:', () => {
+            describe('Tracing path from A1 to A1', () => {
+                let paths = result.getShortestPaths('A1', 'A1', 1, 1);
+
+                it('There should be only one path', () => {
+                    assert(paths.length === 1);
+                });
+
+                it('The path should be: A1', () => {
+                    assert(utils.isEqualObject(paths[0].getPath(), ['A1']));
+                });
+
+                it('The total cost should be $0', () => {
+                    assert(paths[0].getTotalCost() === 0);
+                });
+            });
+
+            describe('Tracing path from A1 to A2', () => {
+                let paths = result.getShortestPaths('A1', 'A2', 1, 1);
+
+                it('There should be only one path', () => {
+                    assert(paths.length === 1);
+                });
+
+                it('The path should be: A1-A2', () => {
+                    assert(utils.isEqualObject(paths[0].getPath(), ['A1', 'A2']));
+                });
+
+                it('The total cost should be $1', () => {
+                    assert(paths[0].getTotalCost() === 1);
+                });
+            });
+        });
     });
 });
 

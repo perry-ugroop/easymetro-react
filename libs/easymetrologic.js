@@ -25,6 +25,38 @@ class Station {
     
 }
 
+class Path {
+    constructor(initPathArr, initCost) {
+        this._path = initPathArr || [];
+        this._totalCost = initCost || 0;
+    }
+
+    _cloneObj(s) {
+        return JSON.parse(JSON.stringify(s));
+    }
+
+    getPath() {
+        return this._cloneObj(this._path);
+    }
+
+    addToPath(stationName) {
+        this._path.push(stationName);
+    }
+
+    addCost(cost) {
+        cost = cost || 0;
+        this._totalCost += cost;
+    }
+
+    getTotalCost() {
+        return this._totalCost;
+    }
+
+    clonePath() {
+       return new Path(this._cloneObj(this._path), this._totalCost); 
+    }
+}
+
 class LineNetwork {
     constructor() {
         this._lines = [];
@@ -123,6 +155,39 @@ class LineNetwork {
     getStationInfo(stationName) {
         let key = this._makeStationKey(stationName);
         return this._stations[key];
+    }
+
+    getShortestPaths(fromStationName, toStationName, costPerStation, costPerLineSwitch) {
+        let visited = {};
+        let startStation = this.getStationInfo(fromStationName);
+        let paths = [];
+
+        if(startStation) {
+            let pathObj = new Path;
+            this._visit(startStation, pathObj, paths, visited, toStationName, costPerStation, costPerLineSwitch); 
+        }
+
+        return paths;
+    }
+
+    _visit(stn, pathObj, paths, visited, toStationName, costPerStation, costPerLineSwitch) {
+        if(stn && !visited[stn.getName()]) {
+            let stationName = stn.getName();
+
+            pathObj.addToPath(stationName);
+            visited[stationName] = true;
+
+            if(stationName === toStationName) {
+                paths.push(pathObj);
+            } else {
+                let nextStations = stn.getNeighborStations();
+                for(let i = 0; i < nextStations.length; i++) {
+                    let startingPath = pathObj.clonePath();
+                    startingPath.addCost(costPerStation);
+                    this._visit(nextStations[i], startingPath, paths, visited, toStationName, costPerStation, costPerLineSwitch); 
+                }
+            }
+        }
     }
 }
 
