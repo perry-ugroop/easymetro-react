@@ -596,4 +596,30 @@ describe('Test parsing line specs', () => {
             });         
         }); 
     }); 
+
+    describe('Parsing the string "A: S1, S2, S3, S4, S5, S1" should yield a valid circular line network object', () => {
+        let result = easymetrologic.parseLinesSpec('A: S1, S2, S3, S4, S5, S1'); 
+
+        it('S1 should have two neighboring stations: S2 and S5', () => {
+            let stn1 = result.getStationInfo('S1');            
+            let neighborStations = stn1.getNeighborStations();
+            
+            let neighStns = utils.getSortedNamesOfNeighborStations(neighborStations);      
+            assert(utils.isEqualObject(neighStns, ['S2', 'S5']));
+        });
+        
+    }); 
+
+    describe('Parsing the string "A: S1, S2, S3, S4, S5, S6, S7, S8, S9, S2" should yield a valid circular line network object', () => {
+        let result = easymetrologic.parseLinesSpec('A: S1, S2, S3, S4, S5, S6, S7, S8, S9, S2'); 
+
+        it('S2 should have three neighboring stations: S1, S3 and S9', () => {
+            let stn2 = result.getStationInfo('S2');            
+            let neighborStations = stn2.getNeighborStations();
+            
+            let neighStns = utils.getSortedNamesOfNeighborStations(neighborStations);      
+            assert(utils.isEqualObject(neighStns, ['S1', 'S3', 'S9']));
+        });
+        
+    }); 
 });
