@@ -83,6 +83,70 @@ describe('Test traversing the line network', () => {
                     assert(paths[0].getTotalCost() === 1);
                 });
             });
+
+            describe('Tracing path from A1 to A3', () => {
+                let paths = result.getShortestPaths('A1', 'A3', 1, 1);
+
+                it('There should be only one path', () => {
+                    assert(paths.length === 1);
+                });
+
+                it('The path should be: A1-A2-A3', () => {
+                    assert(utils.isEqualObject(paths[0].getPath(), ['A1', 'A2', 'A3']));
+                });
+
+                it('The total cost should be $2', () => {
+                    assert(paths[0].getTotalCost() === 2);
+                });
+            });
+
+            describe('Tracing path from A1 to AB', () => {
+                let paths = result.getShortestPaths('A1', 'AB', 1, 1);
+
+                it('There should be only one path', () => {
+                    assert(paths.length === 1);
+                });
+
+                it('The path should be: A1-A2-A3-AB', () => {
+                    assert(utils.isEqualObject(paths[0].getPath(), ['A1', 'A2', 'A3', 'AB']));
+                });
+
+                it('The total cost should be $3', () => {
+                    assert(paths[0].getTotalCost() === 3);
+                });
+            });
+
+            describe('Tracing path from A1 to A5', () => {
+                let paths = result.getShortestPaths('A1', 'A5', 1, 1);
+
+                it('There should be only one path', () => {
+                    assert(paths.length === 1);
+                });
+
+                it('The path should be: A1-A2-A3-AB-A5', () => {
+                    assert(utils.isEqualObject(paths[0].getPath(), ['A1', 'A2', 'A3', 'AB', 'A5']));
+                });
+
+                it('The total cost should be $4', () => {
+                    assert(paths[0].getTotalCost() === 4);
+                });
+            });
+
+            describe('Tracing path from A1 to AC', () => {
+                let paths = result.getShortestPaths('A1', 'AC', 1, 1);
+
+                it('There should be only one path', () => {
+                    assert(paths.length === 1);
+                });
+
+                it('The path should be: A1-A2-A3-AB-A5-AC', () => {
+                    assert(utils.isEqualObject(paths[0].getPath(), ['A1', 'A2', 'A3', 'AB', 'A5', 'AC']));
+                });
+
+                it('The total cost should be $5', () => {
+                    assert(paths[0].getTotalCost() === 5);
+                });
+            });
         });
     });
 });
