@@ -7,6 +7,10 @@ class Station {
         this._neighborStations = [];
     }
 
+    _cloneObj(s) {
+        return JSON.parse(JSON.stringify(s));
+    }
+
     getName() {
         return this._name;
     }
@@ -22,7 +26,27 @@ class Station {
     addLine(lineName) {
         this._lines.push(lineName);
     }
-    
+
+    getLines() {
+        return this._cloneObj(this._lines);
+    }
+
+    isInTheSameLineAs(stn) {
+        let ret = false;
+        let thisLines = this.getLines();
+        let stnLines = stn.getLines();
+
+        for(let i = 0; i < thisLines.length; i++) {
+            for(let j = 0; j < stnLines.length; j++) {
+                if (thisLines[i] === stnLines[j]) {
+                    ret = true;
+                    break;
+                }
+            }
+        }
+
+        return ret;
+    }
 }
 
 class Path {
@@ -54,6 +78,16 @@ class Path {
 
     clonePath() {
        return new Path(this._cloneObj(this._path), this._totalCost); 
+    }
+
+    lastStation() {
+        let stn = null;
+
+        if(this._path.length > 0) {
+            stn = this._path[this._path.length - 1];
+        }
+
+        return stn;
     }
 }
 
@@ -171,22 +205,50 @@ class LineNetwork {
     }
 
     _visit(stn, pathObj, paths, visited, toStationName, costPerStation, costPerLineSwitch) {
-        if(stn && !visited[stn.getName()]) {
+
+        if(stn) {
             let stationName = stn.getName();
 
+            let lastVisitedStation = pathObj.lastStation();
             pathObj.addToPath(stationName);
+
             visited[stationName] = true;
 
             if(stationName === toStationName) {
-                paths.push(pathObj);
-            } else {
+
+                if(paths.length === 0) {
+                    paths.push(pathObj);
+                } else {
+                    if(pathObj.getPath().length < paths[0].getPath().length) {
+                        while(paths.length > 0) {
+                            paths.pop();
+                        } 
+
+                        paths.push(pathObj);
+                    }
+                }
+            } else  {
                 let nextStations = stn.getNeighborStations();
                 for(let i = 0; i < nextStations.length; i++) {
-                    let startingPath = pathObj.clonePath();
-                    startingPath.addCost(costPerStation);
-                    this._visit(nextStations[i], startingPath, paths, visited, toStationName, costPerStation, costPerLineSwitch); 
+
+                    if(!visited[nextStations[i].getName()] || nextStations[i].getName() === toStationName) {
+                        let startingPath = pathObj.clonePath();
+                        startingPath.addCost(costPerStation);
+
+                        if(lastVisitedStation) {
+                            let lastVisitedStationObj = this.getStationInfo(lastVisitedStation);
+
+                            if(lastVisitedStationObj && !lastVisitedStationObj.isInTheSameLineAs(nextStations[i])) {
+                                startingPath.addCost(costPerLineSwitch);
+                            }
+                        }
+
+                        this._visit(nextStations[i], startingPath, paths, visited, toStationName, costPerStation, costPerLineSwitch); 
+                    }
+
                 }
             }
+
         }
     }
 }

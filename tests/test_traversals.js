@@ -147,6 +147,70 @@ describe('Test traversing the line network', () => {
                     assert(paths[0].getTotalCost() === 5);
                 });
             });
+
+            describe('Tracing path from A1 to A7', () => {
+                let paths = result.getShortestPaths('A1', 'A7', 1, 1);
+
+                it('There should be only one path', () => {
+                    assert(paths.length === 1);
+                });
+
+                it('The path should be: A1-A2-A3-AB-A5-AC-A7', () => {
+                    assert(utils.isEqualObject(paths[0].getPath(), ['A1', 'A2', 'A3', 'AB', 'A5', 'AC', 'A7']));
+                });
+
+                it('The total cost should be $6', () => {
+                    assert(paths[0].getTotalCost() === 6);
+                });
+            });
+
+            describe('Tracing path from A1 to B2', () => {
+                let paths = result.getShortestPaths('A1', 'B2', 1, 1);
+
+                it('There should be only one path', () => {
+                    assert(paths.length === 1);
+                });
+
+                it('The path should be: A1-A2-A3-AB-B2', () => {
+                    assert(utils.isEqualObject(paths[0].getPath(), ['A1', 'A2', 'A3', 'AB', 'B2']));
+                });
+
+                it('The total cost should be $4 plus 1 line switch, or $5', () => {
+                    assert(paths[0].getTotalCost() === 5);
+                });
+            });
+
+            describe('Tracing path from A1 to B1', () => {
+                let paths = result.getShortestPaths('A1', 'B1', 1, 1);
+
+                it('There should be only one path', () => {
+                    assert(paths.length === 1);
+                });
+
+                it('The path should be: A1-A2-A3-AB-B2-B1', () => {
+                    assert(utils.isEqualObject(paths[0].getPath(), ['A1', 'A2', 'A3', 'AB', 'B2', 'B1']));
+                });
+
+                it('The total cost should be $5 plus 1 line switch, or $6', () => {
+                    assert(paths[0].getTotalCost() === 6);
+                });
+            });
+
+            describe('Tracing path from A1 to BC', () => {
+                let paths = result.getShortestPaths('A1', 'BC', 1, 1);
+
+                it('There should be only one path', () => {
+                    assert(paths.length === 1);
+                });
+
+                it('The path should be: A1-A2-A3-AB-B4-B5-BC', () => {
+                    assert(utils.isEqualObject(paths[0].getPath(), ['A1', 'A2', 'A3', 'AB', 'B4', 'B5', 'BC']), `Nope, it's ${JSON.stringify(paths[0].getPath())}`);
+                });
+
+                it('The total cost should be $6 plus 1 line switch, or $7', () => {
+                    assert(paths[0].getTotalCost() === 7);
+                });
+            });
         });
     });
 });
